@@ -29,7 +29,7 @@ contract GatekeeperOneTest is StdCheats, Test {
         //////////////////
         // LEVEL ATTACK //
         //////////////////
-        Attack attack = new Attack(levelAddress);
+        Attack attack = new Attack(address(ethernautGatekeeperOne));
 
         // 1.
         // uint32(uint64(_gateKey)) == uint16(uint64(_gateKey))
