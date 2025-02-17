@@ -14,7 +14,7 @@ contract SwitchTest is StdCheats, Test {
         ethernaut = new Ethernaut();
     }
 
-    function testSwitchack() public {
+    function testSwitcHack() public {
         /////////////////
         // LEVEL SETUP //
         /////////////////
