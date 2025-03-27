@@ -1,66 +1,57 @@
-## Foundry
+# 🧠 Ethernaut Challenges (Foundry Edition)
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This repository contains my solutions to the [Ethernaut](https://ethernaut.openzeppelin.com/) wargame challenges, using the **Foundry** framework for testing and simulation.
 
-Foundry consists of:
+## 📦 Setup
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+Make sure you have [Foundry](https://book.getfoundry.sh/) installed:
 
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
+```bash
+curl -L https://foundry.paradigm.xyz | bash
+foundryup
 ```
 
-### Test
+Then install dependencies and run tests:
 
-```shell
-$ forge test
+```bash
+forge install
+forge test
 ```
 
-### Format
+## Levels
 
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+| Level                                                |
+| ---------------------------------------------------- |
+| [1. Fallback](src/Fallback)                          |
+| [2. Fallout](src/Fallout)                            |
+| [3. CoinFlip](src/CoinFlip)                          |
+| [4. Telephone](src/Telephone)                        |
+| [5. Token](src/Token)                                |
+| [6. Delegation](src/Delegation)                      |
+| [7. Force](src/Force)                                |
+| [8. Vault](src/Vault)                                |
+| [9. King](src/King)                                  |
+| [10. Re-Entrancy](src/Reentrance)                    |
+| [11. Elevator](src/Elevator)                         |
+| [12. Privacy](src/Privacy)                           |
+| [13. GatekeeperOne](src/GatekeeperOne)               |
+| [14. GatekeeperTwo](src/GatekeeperTwo)               |
+| [15. NaughtCoin](src/NaughtCoin)                     |
+| [16. Preservation](src/Preservation)                 |
+| [17. Recovery](src/Recovery)                         |
+| [18. Magic Number](src/MagicNum)                     |
+| [19. AlienCodex](src/AlienCodex)                     |
+| [20. Denial](src/Denial)                             |
+| [21. Shop](src/Shop)                                 |
+| [22. Dex](src/Dex)                                   |
+| [23. Dex Two](src/DexTwo)                            |
+| [24. PuzzleWallet](src/PuzzleWallet)                 |
+| [25. Motorbike](src/Motorbike)                       |
+| [26. DoubleEntryPoint](src/DoubleEntryPoint)         |
+| [27. Good Samaritan](src/GoodSamaritan)              |
+| [28. Gatekeeper Three](src/GatekeeperThree)          |
+| [29. Switch](src/Switch)                             |
+| [30. Higher Order](src/HigherOrder)                  |
+| [31. Stake](src/Stake)                               |
+| [32. Impersonator](src/Impersonator)                 |
+| [33. Magic Animal Carousel](src/MagicAnimalCarousel) |
